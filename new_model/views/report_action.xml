@@ -1,0 +1,15 @@
+<odoo>
+    <!-- Report Action -->
+    <!--    <report-->
+    <!--        id="action_report_my_custom_pdf"-->
+    <!--        model="new_model.new_model"-->
+    <!--        string="Print Custom PDF"-->
+    <!--        report_type="qweb-pdf"-->
+    <!--        name="new_model.report_my_custom_pdf"-->
+    <!--        file="new_model.report_my_custom_pdf"-->
+    <!--        print_report_name="'Custom Report - ' + object.name"-->
+    <!--    />-->
+
+    <!-- ir.actions.report Record -->
+
+</odoo>

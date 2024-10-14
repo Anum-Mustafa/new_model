@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_packing_list_custom">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>
+                                Quotation #
+                                <span t-field="o.reference_no"/>
+                            </h2>
+                            <div class="row" style="display: flex; justify-content: space-between; margin: 20px 0;">
+                                <div class="col-4" style="text-align: left;">
+                                    <strong>Quotation Date:</strong><br/>
+                                    <span t-field="o.qoutation_date"/>
+                                </div>
+                                <div class="col-4" style="text-align: center;">
+                                    <strong>Expiration Date:</strong><br/>
+                                    <span t-field="o.expiration_date"/>
+                                </div>
+                                <div class="col-4" style="text-align: right;">
+                                    <strong>Salesperson:</strong><br/>
+                                    <span t-field="o.sales_person.name"/>
+                                </div>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Taxes</th>
+                                        <th>Discount</th>
+                                        <th>Discount Amount</th>
+                                        <th>Tax Amount</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="symbol" t-value="o.orderline_ids.currency_id.symbol"/>
+                                    <t t-foreach="o.orderline_ids" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.description"/>
+                                            <td>
+                                                <span t-field="line.quantity_with_unit"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.unit_price"/>
+                                                <t t-esc="symbol"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.taxes.name"/>
+                                                <t t-esc="symbol"/>
+                                            </td>
+                                            <td t-esc="line.discount"/>
+                                            <td>
+                                                <t t-esc="line.discount_amount"/>
+                                                <t t-esc="symbol"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.tax_amount"/>
+                                                <t t-esc="symbol"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.computed_field"/>
+                                                <t t-esc="symbol"/>
+                                            </td>
+
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <!-- Totals Section in a Table Format -->
+                            <table class="table" style="width: 50%; margin-left: auto; margin-top: 20px; border: 1px solid #ddd;">
+                                <tr>
+                                    <td>Untaxed Amount</td>
+                                    <td class="text-right"><span><t t-esc="o.untaxed_amount"/> <t t-esc="symbol"/></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Tax Amount</td>
+                                    <td class="text-right"><span><t t-esc="o.tax_amount"/> <t t-esc="symbol"/></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Discount Amount</td>
+                                    <td class="text-right"><span><t t-esc="o.total_discount_amount"/> <t t-esc="symbol"/></span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Amount</strong></td>
+                                    <td class="text-right"><strong><span><t t-esc="o.total_amount"/> <t t-esc="symbol"/></span></strong></td>
+                                </tr>
+
+
+
+                            </table>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_packing_list" model="ir.actions.report">
+            <field name="name">PackingList</field>
+            <field name="model">new_model.new_model</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">new_model.report_packing_list_custom</field>
+            <field name="report_file">new_model.report_packing_list_custom</field>
+            <field name="binding_model_id" ref="new_model.model_new_model_new_model"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
